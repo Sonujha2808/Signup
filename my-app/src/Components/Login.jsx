@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import illustration from '../Photo/image.png'; // Update the path based on where you store the image
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate()
+    const {user,loginAndSaveTheUser} = useAuth()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
+    useEffect(()=>{
+        if(user){
+            navigate('/')
+        }
+    },[])
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         return regex.test(email);
@@ -32,7 +40,20 @@ const Login = () => {
         }
 
         if (valid) {
-            alert('Login successful');
+            fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                loginAndSaveTheUser(data?.user)
+                navigate("/")
+                    alert('login successfully');
+            })
+            .catch(error => console.error('Error:', error));
         }
     };
 

@@ -52,13 +52,13 @@ const Signup = () => {
             setConfirmPasswordError('');
         }
 
+//         if (valid) {
+//             alert('Signup successful');
+//             navigate('/login'); // Redirect to the login page
+//         }
+// //Api data
         if (valid) {
-            alert('Signup successful');
-            navigate('/login'); // Redirect to the login page
-        }
-//Api data
-        if (valid) {
-            fetch('http://localhost:3001/api/stud/register', {
+            fetch('http://localhost:5000/api/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

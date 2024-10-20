@@ -13,8 +13,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 // MongoDB connection
-const mongoURI = 'mongodb://localhost:27017/'; // Replace 'your_database_name' with the desired database name
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+const mongoURI = 'mongodb://localhost:27017/student'; // Replace 'your_database_name' with the desired database name
+mongoose.connect(mongoURI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
